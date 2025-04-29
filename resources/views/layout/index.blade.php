@@ -8,6 +8,12 @@
   </head>
   <body>
 
+<div class="container my-5">
+<a href="{{ route('fotos') }}" class="btn btn-primary">Fotos</a>
+<a href="{{ route('nosotros') }}" class="btn btn-primary">Nosotros</a>
+<a href="{{ route('noticias') }}" class="btn btn-primary">Noticias</a>
+</div>
+
 <div class="container">
     @yield('content')
 </div>
