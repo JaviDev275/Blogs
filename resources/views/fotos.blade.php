@@ -5,4 +5,4 @@
         <h1>Fotos</h1>
         <a class="btn btn-primary">Adicionar Foto</a>
     </div>
-@endsection
+    @endsection

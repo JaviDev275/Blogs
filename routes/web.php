@@ -3,14 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 
-Route::get('/', [PagesController::class, 'inicio']);
+Route::get('/', [PagesController::class, 'inicio'])->name('welcome');
+Route::get('/nota/{id}', [PagesController::class, 'detalle'])->name('nota.detalle');
+Route::post('/',[PagesController::class, 'crear']);
+
 
 Route::get('/fotos', [PagesController::class, 'fotos'])->name('fotos');
 
 Route::get('/noticias', [PagesController::class, 'noticias'])->name('noticias');
 
-
-
-
-Route::get('nosotros/{nombre?}', [PagesController::class, 'nosotros'])->name('nosotros'); 
-
+Route::get('nosotros/{nombre?}', [PagesController::class, 'nosotros'])->name('nosotros');
