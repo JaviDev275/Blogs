@@ -32,9 +32,13 @@ public function detalle($id){
 }
 
 
-public function crear($id){
-    $nota = Nota::findOrFail($id);
+public function crear(Request $request){
+    $notaNueva = new Nota;
+    $notaNueva->nombre = $request->nombre;
+    $notaNueva->descripcion = $request->descripcion;
 
-    return view('notas.detalle',compact('nota'));
+    $notaNueva->save();
+
+    return back()->with('mensaje','Nota creada correctamente');
 }
 }

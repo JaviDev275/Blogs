@@ -5,7 +5,7 @@ use App\Http\Controllers\PagesController;
 
 Route::get('/', [PagesController::class, 'inicio'])->name('welcome');
 Route::get('/nota/{id}', [PagesController::class, 'detalle'])->name('nota.detalle');
-Route::post('/',[PagesController::class, 'crear']);
+Route::post('/',[PagesController::class, 'crear']) ->name('notas.crear');
 
 
 Route::get('/fotos', [PagesController::class, 'fotos'])->name('fotos');

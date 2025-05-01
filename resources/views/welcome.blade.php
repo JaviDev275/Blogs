@@ -4,7 +4,11 @@
 
 <div class="container my-4">
     <h1 class="display-4">Notas</h1>
-
+    @if(session('mensaje'))
+    <div class="alert alert-success">
+        {{ session('mensaje') }}
+    </div>
+    @endif
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -13,20 +17,23 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ route('notas.crear') }}" method="post">
-                        <input type="text" placeholder="Nombre" class="form-control mb-2" name="nombre"">
-        <input type=" text" placeholder="Descripcion" class="form-control mb-2" name="descripcion"">
-                    </form>
-                </div>
-                <div class=" modal-footer">
+                <form action="{{ route('notas.crear') }}" method="post">
+                    <div class="modal-body">
+                        @csrf
+                        <input type="text" placeholder="Nombre" class="form-control mb-2" name="nombre">
+                        <input type=" text" placeholder="Descripcion" class="form-control mb-2" name="descripcion">
+                    </div>
+                    <div class=" modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button class=" btn btn-primary btn-block" type="submit">Agregar</button>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Agregar </button>
     <table class=" table">
         <thead>
             <tr>
@@ -43,9 +50,7 @@
                 <td><a href="{{ route('nota.detalle', $nota) }}">{{$nota->nombre}}</a></td>
                 <!-- url('/'.$nota->id.'') -->
                 <td>{{$nota->descripcion}}</td>
-                <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Agregar </button></td>
+                <td> Hola</td>
             </tr>
             @endforeach()
         </tbody>
