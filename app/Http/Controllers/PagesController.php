@@ -8,7 +8,7 @@ use App\Models\Nota;
 class PagesController extends Controller
 {
     public function inicio(){
-        $notas = Nota::all();
+        $notas = Nota::paginate(3);
         return view('welcome',compact('notas'));   
     }
 
@@ -33,6 +33,17 @@ public function detalle($id){
 
 
 public function crear(Request $request){
+    $request->validate(
+        rules: [
+            "nombre" => "required",
+            "descripcion" => "required",
+        ],
+        messages: [
+            "nombre.required" => "El nombre es obligatorio",
+            "descripcion.required" => "La descripcion es obligatoria",
+        ]
+    );
+
     $notaNueva = new Nota;
     $notaNueva->nombre = $request->nombre;
     $notaNueva->descripcion = $request->descripcion;
@@ -40,5 +51,40 @@ public function crear(Request $request){
     $notaNueva->save();
 
     return back()->with('mensaje','Nota creada correctamente');
+}
+
+public function editar($id){
+    $nota = Nota::findOrFail($id);
+    return view('notas.editar',compact('nota'));
+}
+
+public function actualizar(Request $request, $id){
+    $request->validate(
+        rules: [
+            "nombre" => "required",
+            "descripcion" => "required",
+        ],
+        messages: [
+            "nombre.required" => "El nombre es obligatorio",
+            "descripcion.required" => "La descripcion es obligatoria",
+        ]
+    );
+
+    $notaActualizar = Nota::findOrFail($id);
+
+    $notaActualizar ->nombre = $request->nombre;
+    $notaActualizar ->descripcion = $request ->descripcion;
+
+    $notaActualizar -> save();
+    return back()->with('mensaje','Nota actualizada correctamente');;
+
+}
+
+public function eliminar($id){
+    $notaEliminar = Nota::findOrFail($id);
+
+    $notaEliminar->delete();
+
+    return back()->with('mensaje','Nota eliminada correctamente');
 }
 }

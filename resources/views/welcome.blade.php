@@ -10,6 +10,14 @@
     </div>
     @endif
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+        {{ $error }}<br>
+        @endforeach
+    </div>
+    @endif
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -20,8 +28,11 @@
                 <form action="{{ route('notas.crear') }}" method="post">
                     <div class="modal-body">
                         @csrf
-                        <input type="text" placeholder="Nombre" class="form-control mb-2" name="nombre">
-                        <input type=" text" placeholder="Descripcion" class="form-control mb-2" name="descripcion">
+
+                        <input type="text" placeholder="Nombre" class="form-control mb-2" name="nombre"
+                            value={{ old("nombre") }}>
+                        <input type=" text" placeholder="Descripcion" class="form-control mb-2" name="descripcion"
+                            value={{ old("descripcion") }}>
                     </div>
                     <div class=" modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -33,7 +44,8 @@
     </div>
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Agregar </button>
+        Agregar
+    </button>
     <table class=" table">
         <thead>
             <tr>
@@ -48,12 +60,21 @@
             <tr>
                 <th scope="row">{{$nota->id}}</th>
                 <td><a href="{{ route('nota.detalle', $nota) }}">{{$nota->nombre}}</a></td>
-                <!-- url('/'.$nota->id.'') -->
                 <td>{{$nota->descripcion}}</td>
-                <td> Hola</td>
+                <td class="d-flex gap-2">
+                    <a href="{{ route("notas.editar",$nota) }}" class="btn btn-warning btn-sm text-white">Editar</a>
+                    <form action="{{ route('notas.eliminar',$nota) }}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm text-white">Eliminar</button>
+                    </form>
+                </td>
             </tr>
             @endforeach()
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        {{$notas->links('pagination::bootstrap-4') }}
+    </div>
 </div>
 @endsection

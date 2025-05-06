@@ -18,7 +18,7 @@
         <a href="{{ route('noticias') }}" class="btn btn-primary">Noticias</a>
     </div>
 
-    <div class="container">
+    <div>
         @yield('content')
     </div>
 
